@@ -9,6 +9,7 @@ import org.apache.commons.configuration.PropertiesConfiguration;
 import org.junit.jupiter.api.BeforeAll;
 import delivery.utils.ApiClient;
 
+
 public class BaseSetupApi {
     private final static String PATH_TO_CONFIG = "application.yaml";
     protected static PropertiesConfiguration configuration;
@@ -19,12 +20,17 @@ public class BaseSetupApi {
     @BeforeAll
     public static void setUp() throws ConfigurationException {
 
+        //read config file
         configuration = new PropertiesConfiguration();
         configuration.load(PATH_TO_CONFIG);
+
+        //get data to config
         RestAssured.baseURI = configuration.getString("base-url");
-        String u = configuration.getString("username");
-        String p = configuration.getString("password");
-        bearerToken = ApiClient.authorizeAndGetToken(u, p);
+        String username = configuration.getString("username");
+        String password = configuration.getString("password");
+
+        //auth
+        bearerToken = ApiClient.authorizeAndGetToken(username, password);
     }
 
     public RequestSpecification getAuthenticatedRequestSpecification(){

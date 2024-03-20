@@ -3,6 +3,7 @@ package delivery.utils;
 import com.google.gson.Gson;
 import delivery.api.BaseSetupApi;
 import delivery.dto.LoginDto;
+import delivery.dto.OrderDtoMockedBuilderAndFactory;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
@@ -26,7 +27,7 @@ public class ApiClient extends BaseSetupApi {
 
     public static String authorizeAndGetToken(String username, String password){
 
-        return given()
+        String token = given()
                 .log()
                 .all()
                 .contentType(ContentType.JSON)
@@ -38,6 +39,23 @@ public class ApiClient extends BaseSetupApi {
                 .extract()
                 .response()
                 .asString();
+        return token;
     }
+
+
+        public static Response createOrder(RequestSpecification spec, OrderDtoMockedBuilderAndFactory orderDtoMocked){
+
+            return given()
+                    .spec(spec)
+                    .log()
+                    .all()
+                    .body(orderDtoMocked)
+                    .post( "/orders")
+                    .then()
+                    .log()
+                    .all()
+                    .extract()
+                    .response();
+        }
 
 }

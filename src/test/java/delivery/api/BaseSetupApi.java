@@ -1,5 +1,6 @@
 package delivery.api;
 
+import delivery.utils.ApiClient;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
@@ -7,7 +8,6 @@ import io.restassured.specification.RequestSpecification;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.junit.jupiter.api.BeforeAll;
-import delivery.utils.ApiClient;
 
 
 public class BaseSetupApi {
@@ -26,8 +26,14 @@ public class BaseSetupApi {
 
         //get data to config
         RestAssured.baseURI = configuration.getString("base-url");
-        String username = configuration.getString("username");
-        String password = configuration.getString("password");
+
+        //String username = configuration.getString("username");
+        //String password = configuration.getString("password");
+        String username = System.getProperty("username");
+        String password = System.getProperty("password");
+
+
+
 
         //auth
         bearerToken = ApiClient.authorizeAndGetToken(username, password);

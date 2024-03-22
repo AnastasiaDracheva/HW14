@@ -43,19 +43,35 @@ public class ApiClient extends BaseSetupApi {
     }
 
 
-        public static Response createOrder(RequestSpecification spec, OrderDtoMockedBuilderAndFactory orderDtoMocked){
+    public static Response createOrder(RequestSpecification spec, OrderDtoMockedBuilderAndFactory orderDtoMocked){
 
-            return given()
-                    .spec(spec)
-                    .log()
-                    .all()
-                    .body(orderDtoMocked)
-                    .post( "/orders")
-                    .then()
-                    .log()
-                    .all()
-                    .extract()
-                    .response();
-        }
+        return given()
+                .spec(spec)
+                .log()
+                .all()
+                .contentType(ContentType.JSON)
+                .body(new Gson().toJson(orderDtoMocked))
+                .post( "/orders")
+                .then()
+                .log()
+                .all()
+                .extract()
+                .response();
+    }
+
+    public static Response deleteOrderById(RequestSpecification spec,int orderId){
+
+        return given()
+                .spec(spec)
+                .log()
+                .all()
+                .contentType(ContentType.JSON)
+                .delete( "/orders" + orderId)
+                .then()
+                .log()
+                .all()
+                .extract()
+                .response();
+    }
 
 }

@@ -33,4 +33,12 @@ public class OrderTest extends BaseSetupApi {
         );
 
     }
+
+    //@Test
+    // void deleteOrderById(){
+
+    //   Response response = ApiClient.getOrders(getAuthenticatedRequestSpecification());
+    //  int orderId = response.getBody().path("Id");
+    //  Response responseDel = ApiClient.deleteOrderById(getAuthenticatedRequestSpecification(), orderId );
+    //}
 }
